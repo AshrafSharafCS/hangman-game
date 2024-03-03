@@ -1,6 +1,6 @@
 const answerSection = document.getElementById("answer-section");
-// const words = ["software", "web", "laravel", "javascript", "nabiha"];
-const words = ["web"];
+const words = ["software", "web", "laravel", "javascript", "nabiha"];
+
 let attempts = 6;
 let randomNum = Math.floor(Math.random() * words.length);
 let word = words[randomNum];
