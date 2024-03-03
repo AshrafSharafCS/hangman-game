@@ -1,4 +1,5 @@
 const words = ["web"];
+const answerSection = document.getElementById("answer-section");
 // const words = ["software", "web", "laravel", "javascript", "nabiha"];
 let attempts = 6;
 const randomNum = Math.floor(Math.random() * words.length);
@@ -32,6 +33,7 @@ function alreadyGuessed(guess) {
 
 function check(guess) {
   let guessedLetter = guess.key.toLowerCase();
+
   if (checkLetter(guess)) {
     let founded = false;
     if (alreadyGuessed(guessedLetter)) {
@@ -45,11 +47,28 @@ function check(guess) {
         }
       }
       if (founded) {
+        answerSection.innerHTML += guessedLetter;
         correctLetters = correctLetters.filter(
           (item) => item !== guessedLetter
         );
+       
       } else {
         attempts -= 1;
+
+        if (attempts === 5) {
+          head();
+        } else if (attempts === 4) {
+          body();
+        } else if (attempts === 3) {
+          rightHand();
+        } else if (attempts === 2) {
+          leftHand();
+        } else if (attempts === 1) {
+          rightLeg();
+        } else if (attempts === 0) {
+          leftLeg();
+          GameOver();
+        }
       }
     }
   } else {
@@ -57,9 +76,18 @@ function check(guess) {
   }
 }
 
-// function updateHTML() {}
+function GameOver() {
+  if (attempts > 0 && correctLetters.length == 0) {
+    alert("You WON!");
+  } else {
+    alert("GameOver you lost!");
+  }
+}
+
+function updateHTML(input) {}
 
 document.addEventListener("keydown", function (event) {
   guess = event;
-    check(guess);
+  check(guess);
+  updateHTML();
 });
