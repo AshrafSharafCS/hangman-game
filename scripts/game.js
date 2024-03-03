@@ -1,6 +1,5 @@
-const words = ["web"];
 const answerSection = document.getElementById("answer-section");
-// const words = ["software", "web", "laravel", "javascript", "nabiha"];
+const words = ["software", "web", "laravel", "javascript", "nabiha"];
 let attempts = 6;
 const randomNum = Math.floor(Math.random() * words.length);
 const word = words[randomNum];
@@ -9,6 +8,8 @@ let letters = word.split("");
 let alreadyGuessedArray = [];
 let correctLetters = letters;
 let guess;
+
+
 
 //  checkLetter function to check if the pressed key is a letter using ASCII codes
 function checkLetter(letter) {
@@ -51,10 +52,13 @@ function check(guess) {
         correctLetters = correctLetters.filter(
           (item) => item !== guessedLetter
         );
-       
+        if (correctLetters.length == 0) {
+          setTimeout(function () {
+            GameOver();
+          }, 500);
+        }
       } else {
         attempts -= 1;
-
         if (attempts === 5) {
           head();
         } else if (attempts === 4) {
@@ -67,7 +71,9 @@ function check(guess) {
           rightLeg();
         } else if (attempts === 0) {
           leftLeg();
-          GameOver();
+          setTimeout(function () {
+            GameOver();
+          }, 500);
         }
       }
     }
@@ -78,10 +84,12 @@ function check(guess) {
 
 function GameOver() {
   if (attempts > 0 && correctLetters.length == 0) {
-    alert("You WON!");
+    alert("You WON! The word was:" + word);
   } else {
-    alert("GameOver you lost!");
+    alert("GameOver you lost! The word was: " + word);
   }
+  resetGame();
+ 
 }
 
 function updateHTML(input) {}
@@ -91,3 +99,4 @@ document.addEventListener("keydown", function (event) {
   check(guess);
   updateHTML();
 });
+
